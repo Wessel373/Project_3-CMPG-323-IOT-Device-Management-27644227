@@ -7,7 +7,7 @@ namespace DeviceManagement_WebApp.Repositories
 {
     public class CategoryRpository
     {
-        private readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
+        private readonly WebApp_CMPG323_27644227Context _context = new WebApp_CMPG323_27644227Context();
 
         public List<Category> GetAll()
         {

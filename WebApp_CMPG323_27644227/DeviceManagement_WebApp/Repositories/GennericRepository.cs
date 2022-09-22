@@ -8,9 +8,9 @@ namespace DeviceManagement_WebApp.Repositories
 {
     public class GennericRepository<I> : IGenericRepository<I> where I : class
     {
-        protected readonly ConnectedOfficeContext _context;
+        protected readonly WebApp_CMPG323_27644227_Context _context;
 
-        public GennericRepository(ConnectedOfficeContext context) 
+        public GennericRepository(WebApp_CMPG323_27644227_Context context) 
         {
             _context = context;
         }

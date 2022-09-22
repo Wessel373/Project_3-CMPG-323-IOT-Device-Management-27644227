@@ -30,7 +30,7 @@ namespace DeviceManagement_WebApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("connectionString")));
-            services.AddDbContext<ConnectedOfficeContext>(options =>
+            services.AddDbContext<WebApp_CMPG323_27644227_Context>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("connectionString")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)

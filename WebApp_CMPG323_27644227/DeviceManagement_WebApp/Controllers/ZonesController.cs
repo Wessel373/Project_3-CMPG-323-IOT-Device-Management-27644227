@@ -7,32 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
-using DeviceManagement_WebApp.Repositories;
 
 namespace DeviceManagement_WebApp.Controllers
 {
-    public class CategoriesController : Controller
+    public class ZonesController : Controller
     {
-        private readonly ConnectedOfficeContext _context;
+        private readonly WebApp_CMPG323_27644227_Context _context;
 
-        
-
-        public CategoriesController(ConnectedOfficeContext context)
+        public ZonesController(WebApp_CMPG323_27644227_Context context)
         {
             _context = context;
         }
 
-        // GET: Categories
+        // GET: Zones
         public async Task<IActionResult> Index()
         {
-            CategoryRpository CategoryRpository = new CategoryRpository();
-
-            var results = CategoryRpository.GetAll();
-
-            return View(results);
+            return View(await _context.Zone.ToListAsync());
         }
 
-        // GET: Categories/Details/5
+        // GET: Zones/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -40,36 +33,37 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
+            var zone = await _context.Zone
+                .FirstOrDefaultAsync(m => m.ZoneId == id);
+            if (zone == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(zone);
         }
 
-        // GET: Categories/Create
+        // GET: Zones/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Zones/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
+        public async Task<IActionResult> Create([Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
         {
-            category.CategoryId = Guid.NewGuid();
-            _context.Add(category);
+            zone.ZoneId = Guid.NewGuid();
+            _context.Add(zone);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Categories/Edit/5
+        // GET: Zones/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -77,33 +71,34 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
-            if (category == null)
+            var zone = await _context.Zone.FindAsync(id);
+            if (zone == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return View(zone);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Zones/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
         {
-            if (id != category.CategoryId)
+            if (id != zone.ZoneId)
             {
                 return NotFound();
             }
+
             try
             {
-                _context.Update(category);
+                _context.Update(zone);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(category.CategoryId))
+                if (!ZoneExists(zone.ZoneId))
                 {
                     return NotFound();
                 }
@@ -113,9 +108,10 @@ namespace DeviceManagement_WebApp.Controllers
                 }
             }
             return RedirectToAction(nameof(Index));
+
         }
 
-        // GET: Categories/Delete/5
+        // GET: Zones/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -123,30 +119,30 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
+            var zone = await _context.Zone
+                .FirstOrDefaultAsync(m => m.ZoneId == id);
+            if (zone == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(zone);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Zones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
+            var zone = await _context.Zone.FindAsync(id);
+            _context.Zone.Remove(zone);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(Guid id)
+        private bool ZoneExists(Guid id)
         {
-            return _context.Category.Any(e => e.CategoryId == id);
+            return _context.Zone.Any(e => e.ZoneId == id);
         }
     }
 }
