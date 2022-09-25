@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DeviceManagement_WebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -9,13 +10,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DeviceManagement_WebApp.Data
 {
-    public partial class ConnectedOfficeContext : DbContext
+    public partial class WebApp_CMPG323_27644227_Context : DbContext
     {
-        public ConnectedOfficeContext()
+        public WebApp_CMPG323_27644227_Context()
         {
         }
 
-        public ConnectedOfficeContext(DbContextOptions<ConnectedOfficeContext> options)
+        public WebApp_CMPG323_27644227_Context(DbContextOptions<WebApp_CMPG323_27644227_Context> options)
             : base(options)
         {
         }
@@ -23,6 +24,11 @@ namespace DeviceManagement_WebApp.Data
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Device> Device { get; set; }
         public virtual DbSet<Zone> Zone { get; set; }
+
+        internal static Task<object> ToListAsync()
+        {
+            throw new NotImplementedException();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
