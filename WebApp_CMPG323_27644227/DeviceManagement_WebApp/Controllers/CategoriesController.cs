@@ -15,21 +15,17 @@ namespace DeviceManagement_WebApp.Controllers
     {
         private readonly WebApp_CMPG323_27644227_Context _context;
 
-        
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoriesController(WebApp_CMPG323_27644227_Context context)
+        public CategoriesController(ICategoryRepository categoryRepository)
         {
-            _context = context;
+            _categoryRepository = categoryRepository;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            CategoryRpository CategoryRpository = new CategoryRpository();
-
-            var results = CategoryRpository.GetAll();
-
-            return View(results);
+            return View(_categoryRepository.GetAll());
         }
 
         // GET: Categories/Details/5
@@ -64,8 +60,7 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
             category.CategoryId = Guid.NewGuid();
-            _context.Add(category);
-            await _context.SaveChangesAsync();
+            _categoryRepository.Add(category);
             return RedirectToAction(nameof(Index));
         }
 

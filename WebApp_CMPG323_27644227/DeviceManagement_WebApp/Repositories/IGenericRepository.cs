@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.SS.Formula.Functions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,16 +8,16 @@ namespace DeviceManagement_WebApp.Repositories
 {
     public interface IGenericRepository<I>
     {
-        T GetById(int id);
-        IEnumerable<T> GetAll();
+        I GetById(int id);
+        IEnumerable<I> GetAll();
 
-        IEnumerable<T> Find(Expression<Func<T,bool>> expression);
+        IEnumerable<I> Find(Expression<Func<I,bool>> expression);
 
-        void Add(T entity);
+        void Add(I entity);
 
-        void AddRange(IEnumerable<T> entities);
-        void Remove(T entity);
+        void AddRange(IEnumerable<I> entities);
+        void Remove(I entity);
 
-        void RemoveRange(IEnumerable<T> entities);
+        void RemoveRange(IEnumerable<I> entities);
     }
 }
