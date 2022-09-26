@@ -8,7 +8,7 @@ namespace DeviceManagement_WebApp.Repositories
 {
     public interface IGenericRepository<I>
     {
-        I GetById(int id);
+        I GetById(Guid id);
         IEnumerable<I> GetAll();
 
         IEnumerable<I> Find(Expression<Func<I,bool>> expression);

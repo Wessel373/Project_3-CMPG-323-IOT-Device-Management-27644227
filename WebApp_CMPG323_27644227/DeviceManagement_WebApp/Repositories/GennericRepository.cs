@@ -3,6 +3,7 @@ using DeviceManagement_WebApp.Models;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace DeviceManagement_WebApp.Repositories
@@ -17,39 +18,41 @@ namespace DeviceManagement_WebApp.Repositories
         }
         public void Add(I entity)
         {
-            _context.Add(entity);
+            _context.Set<I>().Add(entity);
             _context.SaveChangesAsync();
         }
 
         public void AddRange(IEnumerable<I> entities)
         {
-            _context.AddRange(entities);
+            _context.Set<I>().AddRange(entities);
             _context.SaveChangesAsync();
         }
 
         public IEnumerable<I> Find(Expression<Func<I, bool>> expression)
         {
-            throw new NotImplementedException();
+            return _context.Set<I>().Where(expression);
         }
 
-        public System.Collections.Generic.IEnumerable<I> GetAll()
+        public IEnumerable<I> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.Set<I>().ToList();
         }
 
-        public I GetById(int id)
+        public I GetById(Guid id)
         {
-            throw new System.NotImplementedException();
+            return _context.Set<I>().Find(id);
         }
 
         public void Remove(I entity)
         {
-            throw new NotImplementedException();
+            _context.Set<I>().Remove(entity);
+            _context.SaveChangesAsync();
         }
 
         public void RemoveRange(IEnumerable<I> entities)
         {
-            throw new NotImplementedException();
+            _context.Set<I>().RemoveRange(entities);
+            _context.SaveChangesAsync();
         }
     }
 }

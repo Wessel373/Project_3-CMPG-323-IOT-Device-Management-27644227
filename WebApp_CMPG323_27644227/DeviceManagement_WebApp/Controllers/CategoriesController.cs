@@ -36,8 +36,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = _categoryRepository.GetById((Guid)id);
             if (category == null)
             {
                 return NotFound();
@@ -67,17 +66,18 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
+            var edit = _categoryRepository.GetById((Guid)id);
+
+            if (edit == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
-            if (category == null)
+            else 
             {
-                return NotFound();
+                return View(edit);
             }
-            return View(category);
+           
         }
 
         // POST: Categories/Edit/5
@@ -87,14 +87,16 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
-            if (id != category.CategoryId)
+            var edit = _categoryRepository.GetById((Guid)id);
+
+            if (edit == null)
             {
                 return NotFound();
             }
+
             try
             {
-                _context.Update(category);
-                await _context.SaveChangesAsync();
+                _categoryRepository.UpdateCategory(category, edit);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -113,13 +115,13 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = _categoryRepository.GetById((Guid)id);
             if (category == null)
             {
                 return NotFound();
@@ -133,9 +135,11 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
-            await _context.SaveChangesAsync();
+
+            var category =  _categoryRepository.GetById(id);
+            _categoryRepository.Remove(category);
+
+            
             return RedirectToAction(nameof(Index));
         }
 
