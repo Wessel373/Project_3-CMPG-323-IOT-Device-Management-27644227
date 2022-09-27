@@ -39,6 +39,8 @@ namespace DeviceManagement_WebApp
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddScoped<ICategoryRepository,CategoryRpository>();
+            services.AddScoped<IDeviceRepository,DeviceRepository>();
+            services.AddScoped<IZoneRepository, ZoneRepository>();
             services.AddRazorPages();
         }
 

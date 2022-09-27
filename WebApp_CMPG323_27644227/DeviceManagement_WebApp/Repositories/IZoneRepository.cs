@@ -1,6 +1,17 @@
-﻿namespace DeviceManagement_WebApp.Repositories
+﻿using DeviceManagement_WebApp.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+
+namespace DeviceManagement_WebApp.Repositories
 {
-    public class IZoneRepository
+    public interface IZoneRepository : IGenericRepository<Zone>
     {
+        void UpdateZone(Zone newZone, Zone oldZone);
+        bool ZoneExists(Guid id);
+        
     }
+
+    
+
+
 }

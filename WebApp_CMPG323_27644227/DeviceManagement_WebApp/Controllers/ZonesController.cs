@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
+using DeviceManagement_WebApp.Repositories;
+using Microsoft.CodeAnalysis.Differencing;
 
 namespace DeviceManagement_WebApp.Controllers
 {
@@ -14,15 +16,17 @@ namespace DeviceManagement_WebApp.Controllers
     {
         private readonly WebApp_CMPG323_27644227_Context _context;
 
-        public ZonesController(WebApp_CMPG323_27644227_Context context)
+        private readonly IZoneRepository _zoneRepository;
+
+        public ZonesController(IZoneRepository zoneRepository)
         {
-            _context = context;
+            _zoneRepository = zoneRepository;
         }
 
         // GET: Zones
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Zone.ToListAsync());
+            return View(_zoneRepository.GetAll());
         }
 
         // GET: Zones/Details/5
@@ -33,8 +37,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
+            var zone = _zoneRepository.GetById((Guid)id);                
             if (zone == null)
             {
                 return NotFound();
@@ -57,8 +60,7 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Create([Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
         {
             zone.ZoneId = Guid.NewGuid();
-            _context.Add(zone);
-            await _context.SaveChangesAsync();
+            _zoneRepository.Add(zone);
 
             return RedirectToAction(nameof(Index));
         }
@@ -66,17 +68,16 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Zones/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
+            var editZone = _zoneRepository.GetById((Guid)id);
+            if (editZone == null)
             {
                 return NotFound();
             }
 
-            var zone = await _context.Zone.FindAsync(id);
-            if (zone == null)
+            else
             {
-                return NotFound();
+                return View(editZone);
             }
-            return View(zone);
         }
 
         // POST: Zones/Edit/5
@@ -86,19 +87,19 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
         {
-            if (id != zone.ZoneId)
+            var editZone = _zoneRepository.GetById((Guid)id);
+            if (editZone == null)
             {
                 return NotFound();
             }
 
             try
             {
-                _context.Update(zone);
-                await _context.SaveChangesAsync();
+                _zoneRepository.UpdateZone(zone,editZone);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ZoneExists(zone.ZoneId))
+                if (!_zoneRepository.ZoneExists(zone.ZoneId))
                 {
                     return NotFound();
                 }
@@ -119,8 +120,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
+            var zone = _zoneRepository.GetById((Guid)id);
             if (zone == null)
             {
                 return NotFound();
@@ -134,15 +134,23 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var zone = await _context.Zone.FindAsync(id);
-            _context.Zone.Remove(zone);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            //var category = _zoneRepository.GetById(id);
+            //_zoneRepository.Remove(category);
 
-        private bool ZoneExists(Guid id)
-        {
-            return _context.Zone.Any(e => e.ZoneId == id);
+            foreach (var cat in _zoneRepository.GetAll())
+            {
+                try
+                {
+                    _zoneRepository.Remove(cat);
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

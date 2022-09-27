@@ -1,4 +1,6 @@
 ﻿using DeviceManagement_WebApp.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DeviceManagement_WebApp.Repositories
 {
@@ -6,6 +8,9 @@ namespace DeviceManagement_WebApp.Repositories
     {
         Category GetMostRecentCategory();
 
-        void UpdateCategory(Category newcategory, Category oldcategory);
+        void UpdateCategory(Category newCategory, Category oldCategory);
+
+        bool CategoryExists(Guid id);
+        
     }
 }

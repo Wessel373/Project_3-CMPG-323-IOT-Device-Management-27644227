@@ -60,6 +60,7 @@ namespace DeviceManagement_WebApp.Controllers
         {
             category.CategoryId = Guid.NewGuid();
             _categoryRepository.Add(category);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -100,7 +101,7 @@ namespace DeviceManagement_WebApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(category.CategoryId))
+                if (!_categoryRepository.CategoryExists(category.CategoryId))
                 {
                     return NotFound();
                 }
@@ -115,7 +116,6 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-
             if (id == null)
             {
                 return NotFound();
@@ -143,9 +143,6 @@ namespace DeviceManagement_WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(Guid id)
-        {
-            return _context.Category.Any(e => e.CategoryId == id);
-        }
+        
     }
 }

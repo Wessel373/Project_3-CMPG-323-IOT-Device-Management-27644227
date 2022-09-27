@@ -9,6 +9,7 @@ namespace DeviceManagement_WebApp.Repositories
     public interface IGenericRepository<I>
     {
         I GetById(Guid id);
+
         IEnumerable<I> GetAll();
 
         IEnumerable<I> Find(Expression<Func<I,bool>> expression);
@@ -16,6 +17,7 @@ namespace DeviceManagement_WebApp.Repositories
         void Add(I entity);
 
         void AddRange(IEnumerable<I> entities);
+
         void Remove(I entity);
 
         void RemoveRange(IEnumerable<I> entities);

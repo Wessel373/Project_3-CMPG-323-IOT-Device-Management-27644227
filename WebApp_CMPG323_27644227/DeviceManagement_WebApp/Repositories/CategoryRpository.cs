@@ -2,6 +2,7 @@
 using DeviceManagement_WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,14 +19,19 @@ namespace DeviceManagement_WebApp.Repositories
             return _context.Category.OrderByDescending(category => category.DateCreated).FirstOrDefault();
         }
 
-        public void UpdateCategory(Category newcategory, Category oldcategory)
+        public void UpdateCategory(Category newCategory, Category oldCategory)
         {
-            oldcategory.CategoryName = newcategory.CategoryName;
-            oldcategory.CategoryDescription = newcategory.CategoryDescription;
-            oldcategory.DateCreated = newcategory.DateCreated;
+            oldCategory.CategoryName = newCategory.CategoryName;
+            oldCategory.CategoryDescription = newCategory.CategoryDescription;
+            oldCategory.DateCreated = newCategory.DateCreated;
+            oldCategory.CategoryId = newCategory.CategoryId;
 
-            _context.Entry(oldcategory).State = EntityState.Modified;
+            _context.Entry(oldCategory).State = EntityState.Modified;
             _context.SaveChangesAsync();
+        }
+        public bool CategoryExists(Guid id)
+        {
+            return _context.Category.Any(e => e.CategoryId == id);
         }
     }
 }
