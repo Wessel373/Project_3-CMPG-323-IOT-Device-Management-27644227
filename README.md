@@ -20,7 +20,7 @@ https://27644227devicemanagementwebappproject3.azurewebsites.net/Devices
 
 #### 2.2 Edit Categories
 * On the main screen of Categories navigate to the pencil on the Category you wish to edit
-* Click on the pencil the the edit view will show
+* Click on the pencil then the edit view will show
 * Enter a name of the Category and a Category description
 * Click Save 
 
@@ -42,7 +42,7 @@ https://27644227devicemanagementwebappproject3.azurewebsites.net/Devices
 
 #### 3.2 Edit Zones
 * On the main screen of Categories navigate to the pencil on the Category you wish to edit
-* Click on the pencil the the edit view will show
+* Click on the pencil then the edit view will show
 * Enter a name of the Category and a Category description
 * Click Save 
 
@@ -57,4 +57,26 @@ https://27644227devicemanagementwebappproject3.azurewebsites.net/Devices
 
 
 ### Step 4: Devices
+
+#### 4.1 Add Devices
+* Add a Device by clicking on the "+" next to the Heading Devices
+* Enter a name of the Device and a Category ID, Zone ID and a status 
+* Then click create
+
+#### 4.2 Edit Devices
+* On the main screen of Devices navigate to the pencil on the Devices you wish to edit
+* Click on the pencil then the edit view will show
+* Enter a name of the Device and a Category ID, Zone ID and a status and check the status of the Device 
+* Click Save and back to list
+
+#### 4.3 View Device Information
+* On the main screen of Devices navigate to the eye on the Devices you wish to View
+* Click on the eye icon then the information will appear on a view
+* Click back-to-list on this view to return to the main Devices page
+
+#### 4.4 Delete Devices
+* On the main screen of Devices navigate to the TrashCan on the Device you wish to Delete
+* on the next view that appears press the delete button to remove the selected Device 
+
 ### Step 5: Logout
+* Click on the Logout tab to logout
