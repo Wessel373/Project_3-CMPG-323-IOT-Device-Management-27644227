@@ -14,7 +14,7 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class ZonesController : Controller
     {
-        private readonly WebApp_CMPG323_27644227_Context _context;
+        
 
         private readonly IZoneRepository _zoneRepository;
 

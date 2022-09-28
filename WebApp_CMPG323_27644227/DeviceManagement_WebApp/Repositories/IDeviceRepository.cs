@@ -11,8 +11,7 @@ namespace DeviceManagement_WebApp.Repositories
         bool DeviceExists(Guid id);
         void UpdateDevice(Device newDevice, Device oldDevice);
         Device GetDeviceById(Guid id);
-        async List<Device> GetAllDevices();
+        List<Device> GetAllDevices();
     }
-    
-    
+        
 }

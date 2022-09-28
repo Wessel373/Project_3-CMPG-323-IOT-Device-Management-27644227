@@ -12,8 +12,7 @@ using DeviceManagement_WebApp.Repositories;
 namespace DeviceManagement_WebApp.Controllers
 {
     public class DevicesController : Controller
-    {
-        private readonly WebApp_CMPG323_27644227_Context _context;
+    {        
 
         private readonly IDeviceRepository _deviceRepository;
 

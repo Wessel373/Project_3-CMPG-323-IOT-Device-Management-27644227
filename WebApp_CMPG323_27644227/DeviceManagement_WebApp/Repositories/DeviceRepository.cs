@@ -40,7 +40,7 @@ namespace DeviceManagement_WebApp.Repositories
             _context.SaveChangesAsync();
         }
 
-        public Device GetDevice(Guid id)
+        public Device GetDeviceById(Guid id)
         {            
             return _context.Device
                 .Include(d => d.Category)
@@ -52,5 +52,7 @@ namespace DeviceManagement_WebApp.Repositories
         {            
             return _context.Device.Include(d => d.Category).Include(d => d.Zone).ToList();
         }
+
+        
     }
 }
